@@ -8,7 +8,6 @@ The site's source, migrated from Google Sites (`sites.google.com/view/vegantorah
 |---|---|
 | `index.html` | Home page |
 | `pages/*.html` | Every divrei torah page (weekly portions, holidays, Q&A and so on). Each file starts with a `title` and a `description`: the description is what Google shows in search results, so it's worth editing by hand |
-| `_data/nav.yml` | The side menu (portions by book, holidays, more pages) |
 | `_layouts/default.html` | The shared page template: SEO tags, schema.org data, breadcrumbs, previous/next links, share buttons |
 | `assets/style.css` | Styling (right-to-left, mobile layout, dark mode) |
 
@@ -24,7 +23,7 @@ The site's source, migrated from Google Sites (`sites.google.com/view/vegantorah
    <h3>Heading</h3>
    <p>Text…</p>
    ```
-2. Add a link to it in `_data/nav.yml`.
+2. Add a link to it on the home page (`index.html`).
 
 ## Turning on GitHub Pages
 Settings → Pages → Source: **Deploy from a branch**, Branch: `main`, folder `/ (root)`.
