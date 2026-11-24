@@ -1,0 +1,107 @@
+---
+layout: default
+---
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow light">דברי תורה לשולחן השבת</p>
+      <h1>דבר תורה צמחוני / טבעוני<br><span>על פרשת השבוע</span></h1>
+      <p class="lead">מקורות מהתורה, מחז"ל ומהרב קוק על צער בעלי חיים ועל מעלת הצמחונות, לכל פרשות השבוע ולחגי ישראל.</p>
+      <div class="hero-actions">
+        <a class="btn btn-light" href="#parashot">לכל הפרשות</a>
+        <a class="btn btn-ghost" href="{{ '/שאלות-ותשובות-אודות-אורח-חיים-דתי-וצמחוני-טבעוני/' | relative_url }}">שאלות ותשובות</a>
+      </div>
+    </div>
+    <a class="week-card" id="this-week" href="#parashot" hidden>
+      <small>פרשת השבוע</small>
+      <strong id="this-week-name"></strong>
+      <span>לדבר התורה ←</span>
+    </a>
+  </div>
+  <div class="hero-leaves" aria-hidden="true">{% include leaf.svg %}{% include leaf.svg %}{% include leaf.svg %}</div>
+</section>
+
+<section class="section" id="parashot">
+  <div class="container">
+    <div class="section-head">
+      <h2>פרשות השבוע</h2>
+      <p>דבר תורה לכל אחת מ־54 פרשות התורה, מסודרות לפי חומשים.</p>
+    </div>
+    <div class="books">
+      {% for b in site.data.home.books %}
+      <div class="book">
+        <div class="book-head">
+          <span class="book-num">{{ forloop.index }}</span>
+          <h3>ספר {{ b.name }}</h3>
+          <span class="count">{{ b.items | size }} פרשות</span>
+        </div>
+        <ul class="chips">
+          {% for it in b.items %}<li><a href="{{ it.url | relative_url }}">{{ it.title }}</a></li>{% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="chagim">
+  <div class="container">
+    <div class="section-head">
+      <h2>חגים ומועדים</h2>
+      <p>דברי תורה צמחוניים למועדי השנה, מראש השנה ועד תשעת הימים.</p>
+    </div>
+    <ul class="chips chips-lg">
+      {% for it in site.data.home.holidays %}<li><a href="{{ it.url | relative_url }}">{{ it.title }}</a></li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="container about">
+    <div class="about-side">
+      <h2>על הספר והאתר</h2>
+      <div class="ornament start" aria-hidden="true">{% include leaf.svg %}<span></span></div>
+    </div>
+    <div class="prose">
+      {{ content }}
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
+    <div class="section-head"><h2>להעמקה</h2></div>
+    <div class="cards">
+      {% assign blurbs = "מקורות מן התורה, מחז״ל ומהוגים יהודיים על צמחונות וצער בעלי חיים.|תשובות לשאלות נפוצות: בשר בשבת, כשרות במסעדות טבעוניות, תשמישי קדושה ועוד.|ספרים ומאמרים מומלצים להמשך הלימוד." | split: "|" %}
+      {% for it in site.data.home.more %}
+      <a class="card" href="{{ it.url | relative_url }}">
+        <h3>{{ it.title }}</h3>
+        <p>{{ blurbs[forloop.index0] }}</p>
+        <span class="card-link">לקריאה ←</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var base = {{ '/' | relative_url | jsonify }};
+  var alias = { "בהעלתך": "בהעלותך", "בחקתי": "בחוקותי", "חוקת": "חקת", "קורח": "קרח", "נצבים": "ניצבים", "מצרע": "מצורע", "קדשים": "קדושים" };
+  fetch("https://www.hebcal.com/shabbat?cfg=json&geonameid=281184&lg=he")
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      var item = (d.items || []).filter(function (i) { return i.category === "parashat"; })[0];
+      if (!item) return;
+      var name = item.hebrew.replace(/^פרשת\s*/, "");
+      var first = name.split("־")[0].trim();
+      first = alias[first] || first;
+      var slug = "דבר-תורה-צמחוני-טבעוני-על-פרשת-" + first.replace(/\s+/g, "-");
+      var card = document.getElementById("this-week");
+      card.href = base + slug + "/";
+      document.getElementById("this-week-name").textContent = name.replace(/־/g, " - ");
+      card.hidden = false;
+    })
+    .catch(function () {});
+})();
+</script>

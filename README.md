@@ -6,10 +6,14 @@ The site's source, migrated from Google Sites (`sites.google.com/view/vegantorah
 
 | Path | Contents |
 |---|---|
-| `index.html` | Home page |
+| `index.html` | The "about the site" text on the home page |
+| `_data/home.yml` | The home page lists: portions by book, holidays, further reading. Add a new page here |
+| `_layouts/home.html` | Home page design (hero, "this week's portion" card, sections) |
+| `_layouts/article.html` | Divrei torah page design |
 | `pages/*.html` | Every divrei torah page (weekly portions, holidays, Q&A and so on). Each file starts with a `title` and a `description`: the description is what Google shows in search results, so it's worth editing by hand |
-| `_layouts/default.html` | The shared page template: SEO tags, schema.org data, breadcrumbs, previous/next links, share buttons |
+| `_layouts/default.html` | The shared frame: header, footer, SEO tags, schema.org data |
 | `assets/style.css` | Styling (right-to-left, mobile layout, dark mode) |
+| `assets/og-image.png` | The image shown when a link is shared on WhatsApp or Facebook |
 
 ## Adding or editing a page
 1. Create a file in `pages/` with front matter:
@@ -23,7 +27,7 @@ The site's source, migrated from Google Sites (`sites.google.com/view/vegantorah
    <h3>Heading</h3>
    <p>Text…</p>
    ```
-2. Add a link to it on the home page (`index.html`).
+2. Add a link to it in `_data/home.yml` (under the right book, holidays, or `more`).
 
 ## Turning on GitHub Pages
 Settings → Pages → Source: **Deploy from a branch**, Branch: `main`, folder `/ (root)`.

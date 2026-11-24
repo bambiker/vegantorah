@@ -3,7 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#24503a">
   {% seo %}
+  <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap">
   <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
   {%- if page.type == "article" %}
   <script type="application/ld+json">
@@ -13,6 +18,7 @@
     "headline": {{ page.title | jsonify }},
     "description": {{ page.description | jsonify }},
     "inLanguage": "he",
+    "image": {{ site.image | absolute_url | jsonify }},
     "mainEntityOfPage": {{ page.url | absolute_url | jsonify }},
     "isPartOf": { "@type": "WebSite", "name": {{ site.title | jsonify }}, "url": {{ "/" | absolute_url | jsonify }} }
   }
@@ -29,35 +35,43 @@
   </script>
   {%- endif %}
 </head>
-<body>
+<body class="{% if page.layout == 'home' %}is-home{% else %}is-page{% endif %}">
   <a class="skip" href="#content">דילוג לתוכן</a>
   <header class="site-header">
-    <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
-    <span class="tagline">{{ site.tagline }}</span>
-  </header>
-  <div class="wrap">
-    <main id="content">
-      {%- if page.url != "/" %}
-      <nav class="crumbs" aria-label="פירורי לחם"><a href="{{ '/' | relative_url }}">דף הבית</a> ‹ <span>{{ page.title }}</span></nav>
-      {%- endif %}
-      <article>
-        <h1>{{ page.title }}</h1>
-        {{ content }}
-      </article>
-      {%- if page.prev or page.next %}
-      <nav class="pager" aria-label="דברי תורה סמוכים">
-        {% if page.prev %}<a class="prev" href="{{ page.prev.url | relative_url }}">→ {{ page.prev.title }}</a>{% endif %}
-        {% if page.next %}<a class="next" href="{{ page.next.url | relative_url }}">{{ page.next.title }} ←</a>{% endif %}
+    <div class="container header-inner">
+      <a class="brand" href="{{ '/' | relative_url }}">
+        <span class="brand-mark">{% include leaf.svg %}</span>
+        <span class="brand-text"><strong>{{ site.title }}</strong><small>{{ site.tagline }}</small></span>
+      </a>
+      <nav class="main-nav" aria-label="ניווט ראשי">
+        <a href="{{ '/#parashot' | relative_url }}">פרשות השבוע</a>
+        <a href="{{ '/#chagim' | relative_url }}">חגים ומועדים</a>
+        <a href="{{ '/שאלות-ותשובות-אודות-אורח-חיים-דתי-וצמחוני-טבעוני/' | relative_url }}">שאלות ותשובות</a>
+        <a href="{{ '/contact/' | relative_url }}">צור קשר</a>
       </nav>
-      {%- endif %}
-      {%- if page.url != "/contact/" and page.url != "/404.html" %}
-      {% include share.html %}
-      <p class="feedback">נשמח לקבל הארות והערות ולשמוע דברי תורה נוספים בנושא, <a href="{{ '/contact/' | relative_url }}">לחצו כאן</a> כדי לשתף אותנו.</p>
-      {%- endif %}
-    </main>
-  </div>
+      <span class="bsd" aria-hidden="true">בס"ד</span>
+    </div>
+  </header>
+  <main id="content">
+    {{ content }}
+  </main>
   <footer class="site-footer">
-    <p><a href="{{ '/' | relative_url }}">{{ site.title }}</a> · <a href="{{ '/contact/' | relative_url }}">צור קשר</a></p>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="brand-mark">{% include leaf.svg %}</span>
+        <div>
+          <strong>{{ site.title }}</strong>
+          <p>דברי תורה שנאמרו ליד שולחן השבת, על צער בעלי חיים ועל מעלת הצמחונות במקורותינו.</p>
+        </div>
+      </div>
+      <nav class="footer-nav" aria-label="קישורים בתחתית">
+        <a href="{{ '/#parashot' | relative_url }}">פרשות השבוע</a>
+        <a href="{{ '/#chagim' | relative_url }}">חגים ומועדים</a>
+        {% for item in site.data.home.more %}<a href="{{ item.url | relative_url }}">{{ item.title }}</a>{% endfor %}
+        <a href="{{ '/contact/' | relative_url }}">צור קשר</a>
+      </nav>
+    </div>
+    <p class="container footer-quote">"וְגָר זְאֵב עִם כֶּבֶשׂ, וְנָמֵר עִם גְּדִי יִרְבָּץ" (ישעיהו יא, ו)</p>
   </footer>
 </body>
 </html>

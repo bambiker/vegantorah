@@ -3,6 +3,7 @@ title: "תורה צמחונית"
 tagline: "דבר תורה צמחוני / טבעוני על פרשת השבוע"
 description: "דברי תורה צמחוניים וטבעוניים על כל פרשות השבוע והחגים: מקורות מהתורה, מחז״ל ומהרב קוק על צער בעלי חיים, צמחונות וטבעונות באורח חיים דתי."
 lang: he_IL
+image: /assets/og-image.png
 
 # When a custom domain is connected (e.g. vegantorah.co.il):
 #   1. set url to "https://vegantorah.co.il" and baseurl to ""
@@ -16,7 +17,7 @@ baseurl: "/vegantorah"
 
 defaults:
   - scope: { path: "" }
-    values: { layout: "default" }
+    values: { layout: "article", image: /assets/og-image.png }
 
 plugins:
   - jekyll-seo-tag

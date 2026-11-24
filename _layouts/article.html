@@ -1,0 +1,49 @@
+---
+layout: default
+---
+{%- assign book = nil -%}{%- assign siblings = nil -%}
+{%- for b in site.data.home.books -%}{%- for it in b.items -%}{%- if it.url == page.url -%}{%- assign book = b.name -%}{%- assign siblings = b.items -%}{%- endif -%}{%- endfor -%}{%- endfor -%}
+{%- assign is_holiday = false -%}
+{%- for it in site.data.home.holidays -%}{%- if it.url == page.url -%}{%- assign is_holiday = true -%}{%- endif -%}{%- endfor -%}
+<header class="page-hero">
+  <div class="container narrow">
+    <nav class="crumbs" aria-label="פירורי לחם">
+      <a href="{{ '/' | relative_url }}">דף הבית</a>
+      {%- if book %}<span aria-hidden="true">‹</span><a href="{{ '/#parashot' | relative_url }}">פרשות השבוע</a><span aria-hidden="true">‹</span><span>ספר {{ book }}</span>
+      {%- elsif is_holiday %}<span aria-hidden="true">‹</span><a href="{{ '/#chagim' | relative_url }}">חגים ומועדים</a>{% endif %}
+    </nav>
+    {%- if book %}<p class="eyebrow">פרשת השבוע · ספר {{ book }}</p>{% elsif is_holiday %}<p class="eyebrow">חגים ומועדים</p>{% endif %}
+    <h1>{{ page.title }}</h1>
+    <div class="ornament" aria-hidden="true"><span></span>{% include leaf.svg %}<span></span></div>
+  </div>
+</header>
+<div class="container narrow">
+  <article class="prose">
+    {{ content }}
+  </article>
+
+  {%- if page.prev or page.next %}
+  <nav class="pager" aria-label="דברי תורה סמוכים">
+    {% if page.prev %}<a class="pager-card prev" href="{{ page.prev.url | relative_url }}"><small>→ הקודם</small><span>{{ page.prev.title }}</span></a>{% else %}<span></span>{% endif %}
+    {% if page.next %}<a class="pager-card next" href="{{ page.next.url | relative_url }}"><small>הבא ←</small><span>{{ page.next.title }}</span></a>{% endif %}
+  </nav>
+  {%- endif %}
+
+  {%- if page.url != "/contact/" and page.url != "/404.html" %}
+  {% include share.html %}
+  <aside class="callout">
+    {% include leaf.svg %}
+    <p>נשמח לקבל הארות והערות ולשמוע דברי תורה נוספים בנושא.</p>
+    <a class="btn btn-small" href="{{ '/contact/' | relative_url }}">שתפו אותנו</a>
+  </aside>
+  {%- endif %}
+
+  {%- if siblings %}
+  <section class="related">
+    <h2>עוד בספר {{ book }}</h2>
+    <ul class="chips">
+      {% for it in siblings %}<li><a href="{{ it.url | relative_url }}"{% if it.url == page.url %} aria-current="page"{% endif %}>{{ it.title }}</a></li>{% endfor %}
+    </ul>
+  </section>
+  {%- endif %}
+</div>
