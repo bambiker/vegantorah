@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% seo %}
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  {%- if page.type == "article" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": {{ page.title | jsonify }},
+    "description": {{ page.description | jsonify }},
+    "inLanguage": "he",
+    "mainEntityOfPage": {{ page.url | absolute_url | jsonify }},
+    "isPartOf": { "@type": "WebSite", "name": {{ site.title | jsonify }}, "url": {{ "/" | absolute_url | jsonify }} }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": {{ site.title | jsonify }}, "item": {{ "/" | absolute_url | jsonify }} },
+      { "@type": "ListItem", "position": 2, "name": {{ page.title | jsonify }}, "item": {{ page.url | absolute_url | jsonify }} }
+    ]
+  }
+  </script>
+  {%- endif %}
+</head>
+<body>
+  <a class="skip" href="#content">דילוג לתוכן</a>
+  <header class="site-header">
+    <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <span class="tagline">{{ site.tagline }}</span>
+  </header>
+  <div class="wrap">
+    <main id="content">
+      {%- if page.url != "/" %}
+      <nav class="crumbs" aria-label="פירורי לחם"><a href="{{ '/' | relative_url }}">דף הבית</a> ‹ <span>{{ page.title }}</span></nav>
+      {%- endif %}
+      <article>
+        <h1>{{ page.title }}</h1>
+        {{ content }}
+      </article>
+      {%- if page.prev or page.next %}
+      <nav class="pager" aria-label="דברי תורה סמוכים">
+        {% if page.prev %}<a class="prev" href="{{ page.prev.url | relative_url }}">→ {{ page.prev.title }}</a>{% endif %}
+        {% if page.next %}<a class="next" href="{{ page.next.url | relative_url }}">{{ page.next.title }} ←</a>{% endif %}
+      </nav>
+      {%- endif %}
+      {%- if page.url != "/contact/" and page.url != "/404.html" %}
+      {% include share.html %}
+      <p class="feedback">נשמח לקבל הארות והערות ולשמוע דברי תורה נוספים בנושא, <a href="{{ '/contact/' | relative_url }}">לחצו כאן</a> כדי לשתף אותנו.</p>
+      {%- endif %}
+    </main>
+    <aside>{% include nav.html %}</aside>
+  </div>
+  <footer class="site-footer">
+    <p><a href="{{ '/' | relative_url }}">{{ site.title }}</a> · <a href="{{ '/contact/' | relative_url }}">צור קשר</a></p>
+  </footer>
+</body>
+</html>

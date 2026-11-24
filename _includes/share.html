@@ -1,0 +1,9 @@
+{%- assign share_url = page.url | absolute_url | uri_escape -%}
+{%- assign share_title = page.title | uri_escape -%}
+<div class="share">
+  <span>שיתוף:</span>
+  <a href="https://wa.me/?text={{ share_title }}%20{{ share_url }}" target="_blank" rel="noopener">וואטסאפ</a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" target="_blank" rel="noopener">פייסבוק</a>
+  <a href="https://twitter.com/intent/tweet?text={{ share_title }}&amp;url={{ share_url }}" target="_blank" rel="noopener">X</a>
+  <a href="mailto:?subject={{ share_title }}&amp;body={{ share_url }}">מייל</a>
+</div>

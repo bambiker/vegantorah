@@ -1,0 +1,26 @@
+# Site settings
+title: "תורה צמחונית"
+tagline: "דבר תורה צמחוני / טבעוני על פרשת השבוע"
+description: "דברי תורה צמחוניים וטבעוניים על כל פרשות השבוע והחגים: מקורות מהתורה, מחז״ל ומהרב קוק על צער בעלי חיים, צמחונות וטבעונות באורח חיים דתי."
+lang: he_IL
+
+# When a custom domain is connected (e.g. vegantorah.co.il):
+#   1. set url to "https://vegantorah.co.il" and baseurl to ""
+#   2. add a CNAME file containing the domain
+url: "https://bambiker.github.io"
+baseurl: "/vegantorah"
+
+# Paste the verification code from Google Search Console here (HTML tag method, content value only)
+# webmaster_verifications:
+#   google: "PASTE-CODE-HERE"
+
+defaults:
+  - scope: { path: "" }
+    values: { layout: "default" }
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-redirect-from
+
+exclude: [README.md, Gemfile, Gemfile.lock, vendor, tools]
